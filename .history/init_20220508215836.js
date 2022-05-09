@@ -1,6 +1,5 @@
 const initPrompt = require('./src/initialPrompt');
-const inquirer = require('inquirer');
-const fs = require('fs');
+const inquirer = require('inquirer')
 
 
 
@@ -9,5 +8,3 @@ const init = async() => {
 };
 
 init();
-
-

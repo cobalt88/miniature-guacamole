@@ -1,6 +1,6 @@
 const initPrompt = require('./src/initialPrompt');
 const inquirer = require('inquirer');
-const fs = require('fs');
+const { fstat } = require('fs');
 
 
 

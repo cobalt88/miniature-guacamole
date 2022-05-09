@@ -2,7 +2,6 @@
 // const db = require('../db/connection');
 const inquirer = require('inquirer');
 const express = require('express');
-const initSwitch = require('../src/initSwitch');
 
 const initialPromptOptions =
 

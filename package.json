@@ -1,25 +1,4 @@
 {
-  "name": "employee-tracker",
-  "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
-  "scripts": {
-    "test": "jest",
-    "start": "node app.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Brainybrian316/Employee-Tracker.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Brainybrian316/Employee-Tracker/issues"
-  },
-  "homepage": "https://github.com/Brainybrian316/Employee-Tracker#readme",
-  "devDependencies": {
-    "jest": "^28.1.0"
-  },
   "dependencies": {
     "console.table": "^0.10.0",
     "dotenv": "^16.0.0",

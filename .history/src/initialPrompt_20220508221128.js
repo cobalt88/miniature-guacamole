@@ -32,7 +32,7 @@ const initialPromptOptions =
 
 const initPrompt = async () => {
 
-await inquirer.prompt(initialPromptOptions);
+  const response = await inquirer.prompt(initialPromptOptions);
 };
 
 

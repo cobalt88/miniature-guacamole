@@ -4,7 +4,7 @@ const inquirer = require('inquirer');
 const express = require('express');
 const db = require('./db/connection');
 require('console.table');
-const initPrompt = require('./src/initialPrompt.js');
+const initPrompt = require('./src/initPrompt.js');
 
 const init = () => {
     initPrompt();
@@ -26,8 +26,8 @@ function viewDepartments() {
         if (err) throw err;
         // console.table is a function that displays the data in a table
         console.table(res);
-        // runs the initialPrompt function
-        initialPrompt();
+        // runs the initPrompt function
+        initPrompt();
     });
 };
 
@@ -43,8 +43,8 @@ function viewRoles() {
         if (err) throw err;
         // console.table is a function that displays the data in a table
         console.table(res);
-        // runs the initialPrompt function
-        initialPrompt();
+        // runs the initPrompt function
+        initPrompt();
     });
 };
 
@@ -62,8 +62,8 @@ function viewEmployee() {
         }
         // returns the response to the console.table function
         console.table(res);
-        // runs the initialPrompt function
-        initialPrompt();
+        // runs the initPrompt function
+        initPrompt();
     });
 };
 
@@ -82,8 +82,8 @@ function viewEmployeeByDepartment() {
         }
         // returns the response to the console.table function
         console.table(res);
-        // runs the initialPrompt function
-        initialPrompt();
+        // runs the initPrompt function
+        initPrompt();
     });
 };
 
@@ -166,8 +166,8 @@ function promptAdd(roles) {
             // displays to the user name of the employee added
             console.log(`${answers.first_name} ${answers.last_name} added to database\n`);
 
-            // runs the initialPrompt function
-            initialPrompt();
+            // runs the initPrompt function
+            initPrompt();
         });
     });
 };
@@ -219,8 +219,8 @@ function promptDelete(deleteEmployee) {
     }
     ]).then(function (answers) {
         if (answers.confirm === false) {
-            // if the user does not confirm, runs the initialPrompt function
-            initialPrompt();
+            // if the user does not confirm, runs the initPrompt function
+            initPrompt();
         } else { // displays the answers to the user in the console
             console.table(answers);
             // SQL query to delete the employee based on the user's answers
@@ -235,8 +235,8 @@ function promptDelete(deleteEmployee) {
                 console.table(res);
                 // displays the ID of the employee deleted
                 console.log(`Employee with the ID:${answers.employeeId} was removed from database\n`);
-                // runs the initialPrompt function
-                initialPrompt();
+                // runs the initPrompt function
+                initPrompt();
             });
         };
     });
@@ -332,8 +332,8 @@ function promptUpdate(updateEmployee, roles) {
                 console.table(res);
                 // displays the ID of the employee updated
                 console.log(`Employee with the ID:${answers.employeeId} was updated to ${answers.roleId}`);
-                // runs the initialPrompt function
-                initialPrompt();
+                // runs the initPrompt function
+                initPrompt();
             });
         });
 };
@@ -402,8 +402,8 @@ function promptAddNewRole(departments) {
             console.table(res);
             // displays the title of the role added
             console.log(`${answers.title} added to database\n`);
-            // runs the initialPrompt function
-            initialPrompt();
+            // runs the initPrompt function
+            initPrompt();
         });
     });
 };
@@ -460,8 +460,8 @@ function promptAddNewDepartment() {
             console.table(res);
             // displays the name of the department added
             console.log(`${answers.department} added to database\n`);
-            // runs the initialPrompt function
-            initialPrompt();
+            // runs the initPrompt function
+            initPrompt();
         });
     });
 };
@@ -519,8 +519,8 @@ function promptRemoveDepartment(departments) {
             console.table(res);
             // displays the name of the department removed
             console.log(`${answers.departmentId} removed from database\n`);
-            // runs the initialPrompt function
-            initialPrompt();
+            // runs the initPrompt function
+            initPrompt();
         });
     });
 };
@@ -578,10 +578,10 @@ function promptRemoveRole(roles) {
             console.table(res);
             // displays the name of the role removed
             console.log(`${answers.roleId} removed from database\n`);
-            // runs the initialPrompt function
-            initialPrompt();
+            // runs the initPrompt function
+            initPrompt();
         });
     });
 };
 
-initialPrompt();
+initPrompt();

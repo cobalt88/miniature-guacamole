@@ -1,9 +1,3 @@
-// const viewDepartments = require('../src/viewDepartments');
-// const db = require('../db/connection');
-const inquirer = require('inquirer');
-const express = require('express');
-const initSwitch = require('../src/initSwitch');
-
 const initialPromptOptions =
 
   [
@@ -27,13 +21,6 @@ const initialPromptOptions =
         "End"
       ]
       // parameter for initialPrompt function is named above in the inquirer.prompt function
-    }
-  ];
+    }]
 
-const initPrompt = async () => {
-
-await inquirer.prompt(initialPromptOptions);
-};
-
-
-module.exports = initPrompt
+module.exports = initialPromptOptions;

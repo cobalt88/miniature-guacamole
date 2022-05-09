@@ -1,7 +1,7 @@
 // const viewDepartments = require('../src/viewDepartments');
 // const db = require('../db/connection');
 const inquirer = require('inquirer');
-const express = require('express');
+const express = require(express);
 const initSwitch = require('../src/initSwitch');
 
 const initialPromptOptions =
@@ -32,7 +32,8 @@ const initialPromptOptions =
 
 const initPrompt = async () => {
 
-await inquirer.prompt(initialPromptOptions);
+  const response = await inquirer.prompt(initialPromptOptions);
+    initSwitch(response);
 };
 
 
