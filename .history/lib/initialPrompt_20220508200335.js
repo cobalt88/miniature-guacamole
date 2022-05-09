@@ -1,7 +1,6 @@
 const inquirer = require('inquirer')
 
-const initialPromptOptions = () => {
-  inquirer.prompt({
+inquirer.prompt({
   type: 'list',
   //  named used for initialPrompt function 
   name: 'initial',
@@ -23,10 +22,4 @@ const initialPromptOptions = () => {
   // parameter for initialPrompt function is named above in the inquirer.prompt function
 });
 
-}
-
-
-
-
-
-module.exports = initialPromptOptions;
+module.exports = initialPrompt;

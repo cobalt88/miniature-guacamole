@@ -4,13 +4,7 @@ const inquirer = require('inquirer');
 const express = require('express');
 const db = require('./db/connection');
 require('console.table');
-const initPrompt = require('./src/initialPrompt.js');
-
-const init = () => {
-    initPrompt();
-}
-
-init();
+const initPrompt = require('./src/initialPrompt.js')
 
 
 

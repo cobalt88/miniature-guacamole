@@ -4,16 +4,100 @@ const inquirer = require('inquirer');
 const express = require('express');
 const db = require('./db/connection');
 require('console.table');
-const initPrompt = require('./src/initialPrompt.js');
 
-const init = () => {
-    initPrompt();
-}
+//  function for initial prompt
+function initialPrompt() {
+    inquirer.prompt({
+        type: 'list',
+        //  named used for initialPrompt function 
+        name: 'initial',
+        message: "What would you like to do?",
+        choices: [
+            "View Departments",
+            "View Roles",
+            "View Employees",
+            "View Employees by Department",
+            "Add Employee",
+            "Remove Employees",
+            "Update Employee Role",
+            "Add New Role",
+            "Add New Department",
+            "Remove Department",
+            "Remove A Role",
+            "End"
+        ]
+        // parameter for initialPrompt function is named above in the inquirer.prompt function
+    }).then(function ({
+        initial
+    }) {
+        // takes the initial parameter and runs the function based on the initial parameter choice
+        switch (initial) {
+            // case for viewing departments
+            case 'View Departments':
+                // function for viewing departments
+                viewDepartments();
+                break;
 
-init();
+                // case for viewing roles
+            case 'View Roles':
+                // function for viewing roles
+                viewRoles();
+                break;
 
+                // case for choices
+            case "View Employees":
+                // function for viewing employees
+                viewEmployee();
+                break;
 
+            case "View Employees by Department":
+                // function for viewing employees by department
+                viewEmployeeByDepartment();
+                break;
 
+            case "Add Employee":
+                // function for adding employee
+                addEmployee();
+                break;
+
+            case "Remove Employees":
+                // function for removing employee
+                removeEmployee();
+                break;
+
+            case "Update Employee Role":
+                // function for updating employee role
+                updateEmployeeRole();
+                break;
+
+            case "Add New Role":
+                // function for adding new role
+                addNewRole();
+                break;
+
+            case "Add New Department":
+                // function for adding new department
+                addNewDepartment();
+                break;
+
+            case "Remove Department":
+                // function for removing department
+                removeDepartment();
+                break;
+
+            case "Remove A Role":
+                // function for removing role
+                removeARole();
+                break;
+
+                // ends the program
+            case "End":
+                db.end();
+                console.log("\nGoodbye!");
+                break;
+        }
+    });
+};
 
 // function for  viewing departments
 function viewDepartments() {
@@ -122,33 +206,33 @@ function addEmployee() {
 function promptAdd(roles) {
     // prompts user based on SQL employees table constructor/columns (first_name, last_name, role_id, manager_id, is_manager)
     inquirer.prompt([{
-        type: 'input',
-        name: 'first_name',
-        message: "What is the employee's first name?"
-    },
-    {
-        type: 'input',
-        name: 'last_name',
-        message: "What is the employee's last name?"
-    },
-    {
-        type: 'list',
-        name: 'roleId',
-        message: "What is the employee's role?",
-        // takes the roles array and displays it to the user
-        choices: roles
-    },
-    {
-        type: 'input',
-        name: 'managerId',
-        message: "What is the employee's manager ID?",
-    },
-    {
-        type: 'confirm',
-        name: 'is_manager',
-        message: "Is the employee a manager?",
-        default: false
-    },
+            type: 'input',
+            name: 'first_name',
+            message: "What is the employee's first name?"
+        },
+        {
+            type: 'input',
+            name: 'last_name',
+            message: "What is the employee's last name?"
+        },
+        {
+            type: 'list',
+            name: 'roleId',
+            message: "What is the employee's role?",
+            // takes the roles array and displays it to the user
+            choices: roles
+        },
+        {
+            type: 'input',
+            name: 'managerId',
+            message: "What is the employee's manager ID?",
+        },
+        {
+            type: 'confirm',
+            name: 'is_manager',
+            message: "Is the employee a manager?",
+            default: false
+        },
     ]).then(function (answers) {
         // displays the answers to the user in the console
         console.table(answers);
@@ -206,17 +290,17 @@ function removeEmployee() {
 function promptDelete(deleteEmployee) {
     // prompts user based on SQL employees table constructor/columns using the employeesID 
     inquirer.prompt([{
-        type: 'list',
-        name: 'employeeId',
-        message: "Which employee would you like to delete? (WARNING: This will delete all associated data and cannot be undone)",
-        choices: deleteEmployee
-    },
-    {
-        type: 'confirm',
-        name: 'confirm',
-        message: "Are you sure you want to delete this employee?",
-        default: false
-    }
+            type: 'list',
+            name: 'employeeId',
+            message: "Which employee would you like to delete? (WARNING: This will delete all associated data and cannot be undone)",
+            choices: deleteEmployee
+        },
+        {
+            type: 'confirm',
+            name: 'confirm',
+            message: "Are you sure you want to delete this employee?",
+            default: false
+        }
     ]).then(function (answers) {
         if (answers.confirm === false) {
             // if the user does not confirm, runs the initialPrompt function
@@ -305,18 +389,18 @@ function roleUpdate(updateEmployee) {
 function promptUpdate(updateEmployee, roles) {
     // prompts user based on SQL employees table constructor/columns using the employeesID and rolesID
     inquirer.prompt([{
-        type: 'list',
-        name: 'employeeId',
-        message: "Which employee would you like to update?",
-        choices: updateEmployee
-    },
-    {
-        type: 'list',
-        name: 'roleId',
-        message: "What will the employee's new role be?",
-        choices: roles
-    },
-    ])
+                type: 'list',
+                name: 'employeeId',
+                message: "Which employee would you like to update?",
+                choices: updateEmployee
+            },
+            {
+                type: 'list',
+                name: 'roleId',
+                message: "What will the employee's new role be?",
+                choices: roles
+            },
+        ])
         .then(function (answers) {
             // displays the answers to the user in the console
             console.table(answers);
@@ -372,21 +456,21 @@ function addNewRole() {
 function promptAddNewRole(departments) {
     //  prompts user based on SQL departments table constructor/columns using the departments table as a reference
     inquirer.prompt([{
-        type: 'input',
-        name: 'title',
-        message: "What is the title for the new role?"
-    },
-    {
-        type: 'input',
-        name: 'salary',
-        message: "What is the role's salary? (Enter as a decimal EX: 100000.00)"
-    },
-    {
-        type: 'list',
-        name: 'departmentId',
-        message: "What is the role's department?",
-        choices: departments
-    },
+            type: 'input',
+            name: 'title',
+            message: "What is the title for the new role?"
+        },
+        {
+            type: 'input',
+            name: 'salary',
+            message: "What is the role's salary? (Enter as a decimal EX: 100000.00)"
+        },
+        {
+            type: 'list',
+            name: 'departmentId',
+            message: "What is the role's department?",
+            choices: departments
+        },
     ]).then(function (answers) {
         // displays the answers to the user in the console
         console.table(answers);
