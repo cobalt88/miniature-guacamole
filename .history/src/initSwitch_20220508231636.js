@@ -1,5 +1,5 @@
 const express = require('express');
-const viewDepartments = require('../src/viewDepartments');
+// const viewDepartments = require('../src/viewDepartments');
 
 const initSwitch = async (response) => {
   switch (response) {
@@ -66,7 +66,5 @@ const initSwitch = async (response) => {
         db.end();
         console.log("\nGoodbye!");
         break;
-  };
 };
-
-module.exports = initSwitch
+}

@@ -34,7 +34,7 @@ const initPrompt = async () => {
 
     const response =  await inquirer.prompt(initialPromptOptions);
     console.log(response)
-    const filter = await initSwitch(response.initial);
+    const filter = await initSwitch(response);
 };
 
 

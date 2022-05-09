@@ -2,7 +2,7 @@
 // const db = require('../db/connection');
 const inquirer = require('inquirer');
 const express = require('express');
-const initSwitch = require('./initSwitch');
+const initSwitch = require('../src/initSwitch');
 
 const initialPromptOptions =
 
@@ -33,8 +33,7 @@ const initialPromptOptions =
 const initPrompt = async () => {
 
     const response =  await inquirer.prompt(initialPromptOptions);
-    console.log(response)
-    const filter = await initSwitch(response.initial);
+    const filter = await initSwitch(response);
 };
 
 
