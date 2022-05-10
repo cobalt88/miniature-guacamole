@@ -6,7 +6,7 @@ const utils = require('./utils');
 
 const init = async() => {
   const response =  await inquirer.prompt(lib.initialPromptOptions);
-  console.log(response)
+  console.log(response.initial);
   const filter = await utils.initSwitch(response.initial);
 };
 

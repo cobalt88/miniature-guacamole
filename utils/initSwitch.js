@@ -1,73 +1,63 @@
-const lib = require('../lib');
 const src = require('../src');
-const utils = require('../utils');
 
 const initSwitch = async(response) => {
   switch (response) {
-    // case for viewing departments
-    case 'View Departments':
-        // function for viewing departments
-        src.readDepartments();
+    case 'View All Departments':
+        src.readDepartments;
         break;
 
-    // case for viewing roles
-    case 'View Roles':
-        // function for viewing roles
-        src.readRoles();
+    case 'Create New Department':
+        src.readRoles;
         break;
 
-    // case for choices
-    case "View Employees":
-        // function for viewing employees
-        viewEmployee();
+    case "Edit Department":
+        src.updateDepartment;
         break;
 
-    case "View Employees by Department":
-        // function for viewing employees by department
-        viewEmployeeByDepartment();
+    case "Delete Department":
+        viewEmployeeByDepartment;
+        break;
+
+    case "View All Roles":
+        src.readRoles;
+        break;
+
+    case "Create New Role":
+        src.createRole;
+        break;
+
+    case "Edit Role":
+        src.updateRole;
+        break;
+
+    case "Delete Role":
+        src.deleteRole;
+        break;
+
+    case "View All Employees":
+        src.readEmployees();
         break;
 
     case "Add Employee":
-        // function for adding employee
-        addEmployee();
+        src.updateEmployee;
         break;
 
-    case "Remove Employees":
-        // function for removing employee
-        removeEmployee();
+    case "Edit Employee":
+        src.updateEmployee;
         break;
 
-    case "Update Employee Role":
-        // function for updating employee role
-        updateEmployeeRole();
-        break;
-
-    case "Add New Role":
-        // function for adding new role
-        addNewRole();
-        break;
-
-    case "Add New Department":
-        // function for adding new department
-        addNewDepartment();
-        break;
-
-    case "Remove Department":
-        // function for removing department
-        removeDepartment();
-        break;
-
-    case "Remove A Role":
-        // function for removing role
-        removeARole();
+    case "Delete Employee":
+        src.deleteEmployee;
         break;
 
     // ends the program
-    case "End":
+    case "Exit":
         db.end();
         console.log("\nGoodbye!");
         break;
   };
 };
+
+initSwitch();
 
 module.exports = initSwitch
