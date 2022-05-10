@@ -1,18 +1,19 @@
-const express = require('express');
-const viewDepartments = require('../src/read/readDepartments');
+const lib = require('../lib');
+const src = require('../src');
+const utils = require('../utils');
 
-const initSwitch = async (response) => {
+const initSwitch = async(response) => {
   switch (response) {
     // case for viewing departments
     case 'View Departments':
         // function for viewing departments
-        viewDepartments();
+        src.readDepartments();
         break;
 
     // case for viewing roles
     case 'View Roles':
         // function for viewing roles
-        viewRoles();
+        src.readRoles();
         break;
 
     // case for choices

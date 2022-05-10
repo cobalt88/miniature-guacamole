@@ -1,5 +1,13 @@
-const db = require('../db/connections');
-const initPrompt = require('./initialPrompt');
+const db = require('../../db/connections');
+const src = require('../../src');
+const lib = require('../../lib');
+const utils = require('../../utils');
 require('console.table');
 
-module.exports = viewEmployee
+
+
+const readEmployees = async() => {
+  console.log('read employees has been called');
+}
+
+module.exports = readEmployees

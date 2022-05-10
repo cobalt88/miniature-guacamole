@@ -1,5 +1,12 @@
 const db = require('../../db/connections');
-const initPrompt = require('./initialPrompt');
+const src = require('../../src');
+const lib = require('../../lib');
+const utils = require('../../utils');
 require('console.table');
 
-module.exports = editEmployee
+
+const updateEmployee = async() => {
+  console.log('updateEmployee has been called');
+};
+
+module.exports = updateEmployee

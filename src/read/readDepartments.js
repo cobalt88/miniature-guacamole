@@ -5,13 +5,16 @@ const utils = require('../../utils');
 require('console.table');
 
 
-function viewDepartments() {
+const readDepartments = async() => {
   console.log('Viewing Departments\n');
   const query = `SELECT * FROM departments`;
-  db.query(query, function (err, res) {
+  const response = await db.query(query, function (err, res) {
       if (err) throw err;
-      return console.table(res);
+      else {
+        console.table(res);
+      }
   });
+  inquirer.prompt(lib.initialPromptOptions)
 };
 
-module.exports = viewDepartments
+module.exports = readDepartments
