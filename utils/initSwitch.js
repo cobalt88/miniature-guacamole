@@ -1,5 +1,5 @@
 const express = require('express');
-const viewDepartments = require('../src/viewDepartments');
+const viewDepartments = require('../src/read/readDepartments');
 
 const initSwitch = async (response) => {
   switch (response) {
