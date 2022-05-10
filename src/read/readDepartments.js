@@ -1,6 +1,7 @@
 const db = require('../../db/connections');
-const initPrompt = require('./initialPrompt');
-
+const src = require('../../src');
+const lib = require('../../lib');
+const utils = require('../../utils');
 require('console.table');
 
 
@@ -9,8 +10,7 @@ function viewDepartments() {
   const query = `SELECT * FROM departments`;
   db.query(query, function (err, res) {
       if (err) throw err;
-      console.table(res);
-      initPrompt();
+      return console.table(res);
   });
 };
 

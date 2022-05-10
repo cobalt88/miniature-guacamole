@@ -1,15 +1,26 @@
-const initPrompt = require('./lib/inquirerPrompts/initialPrompt');
+// const initPrompt = require('./lib/inquirerPrompts/initialPrompt');
 const inquirer = require('inquirer');
-const fs = require('fs');
-const modules = require('./src');
+// const fs = require('fs');
+const src = require('./src');
+const lib = require('./lib');
+const utils = require('./utils');
 
+
+const init = async() => {
+  const response =  await inquirer.prompt(lib.initialPromptOptions);
+  console.log(response)
+  const filter = await utils.initSwitch(response.initial);
+};
 
 // const init = async() => {
-//   const response =  await inquirer.prompt(initialPromptOptions);
-//   console.log(response)
-//   const filter = await initSwitch(response.initial);
-// };
-console.log(modules)
-// init();
+//   const result = await modules.createDepartment();
+//   console.log(result);
+// }
+
+init();
+
+
+
+
 
 
