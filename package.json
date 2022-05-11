@@ -5,5 +5,30 @@
     "express": "^4.18.1",
     "inquirer": "^8.2.4",
     "mysql2": "^2.3.3"
-  }
+  },
+  "name": "miniature-guacamole",
+  "description": "Simplified employee tracker for module 12 challenge",
+  "version": "1.0.0",
+  "main": "init.js",
+  "directories": {
+    "lib": "lib",
+    "src": "src",
+    "utils": "utils"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node init.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cobalt88/miniature-guacamole.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cobalt88/miniature-guacamole/issues"
+  },
+  "homepage": "https://github.com/cobalt88/miniature-guacamole#readme"
 }

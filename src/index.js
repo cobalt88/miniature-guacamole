@@ -29,3 +29,4 @@ module.exports = {
   updateDepartment: updateDepartment,
   updateRole: updateRole
 };
+

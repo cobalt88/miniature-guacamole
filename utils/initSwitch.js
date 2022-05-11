@@ -1,37 +1,39 @@
-const src = require('../src');
+const src = require('../src')
 
-const initSwitch = async(response) => {
+const initSwitch = (response) => {
   switch (response) {
     case 'View All Departments':
-        src.readDepartments;
+        src.readDepartments();
+        console.log(response);
         break;
 
     case 'Create New Department':
-        src.readRoles;
+        console.log('create department switch statement has been triggered.')
+        src.createDepartment();
         break;
 
     case "Edit Department":
-        src.updateDepartment;
+        src.updateDepartment();
         break;
 
     case "Delete Department":
-        viewEmployeeByDepartment;
+        src.deleteDepartment();
         break;
 
     case "View All Roles":
-        src.readRoles;
+        src.readRoles();
         break;
 
     case "Create New Role":
-        src.createRole;
+        src.createRole();
         break;
 
     case "Edit Role":
-        src.updateRole;
+        src.updateRole();
         break;
 
     case "Delete Role":
-        src.deleteRole;
+        src.deleteRole();
         break;
 
     case "View All Employees":
@@ -39,15 +41,15 @@ const initSwitch = async(response) => {
         break;
 
     case "Add Employee":
-        src.updateEmployee;
+        src.updateEmployee();
         break;
 
     case "Edit Employee":
-        src.updateEmployee;
+        src.updateEmployee();
         break;
 
     case "Delete Employee":
-        src.deleteEmployee;
+        src.deleteEmployee();
         break;
 
     // ends the program
@@ -58,6 +60,5 @@ const initSwitch = async(response) => {
   };
 };
 
-initSwitch();
 
 module.exports = initSwitch

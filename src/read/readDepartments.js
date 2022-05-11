@@ -1,4 +1,3 @@
-const db = require('../../db/connections');
 const lib = require('../../lib');
 require('console.table');
 
