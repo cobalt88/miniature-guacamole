@@ -14,3 +14,4 @@ const cliNav = async() => {
   }
 }
 
+module.exports = cliNav

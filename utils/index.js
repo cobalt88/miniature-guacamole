@@ -1,5 +1,8 @@
 const initSwitch = require('./initSwitch');
-
+const exit = require('./exit');
+const cliNav = require('./cliNav');
 module.exports = {
-  initSwitch: initSwitch
+  initSwitch: initSwitch,
+  exit: exit,
+  cliNav: cliNav
 };
