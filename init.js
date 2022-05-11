@@ -1,15 +1,12 @@
 const inquirer = require('inquirer');
-const src = require('./src');
-const lib = require('./lib');
+const inquirerPrompts = require('./lib/inquirerPrompts');
 const initSwitch = require('./utils/initSwitch');
 
 
 const init = async() => {
-  const response =  await inquirer.prompt(lib.initialPromptOptions);
-  console.log(response.initial);
+  const response =  await inquirer.prompt(inquirerPrompts.initialPromptOptions);
   initSwitch(response.initial);
 };
-
 
 init();
 

@@ -1,6 +1,6 @@
-const deleteEmployee = require('./delete/deleteEmployee');
-const deleteDepartment = require('./delete/deleteDepartment');
-const deleteRole = require('./delete/deleteRole');
+const deleteEmployee = require('./deleteEmployee');
+const deleteDepartment = require('./deleteDepartment');
+const deleteRole = require('./deleteRole');
 
 module.exports = {
   deleteEmployee: deleteEmployee,

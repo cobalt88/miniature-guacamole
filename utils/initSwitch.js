@@ -1,4 +1,7 @@
-const read = require('../src/read')
+const read = require('../src/read');
+const update = require('../src/update');
+const create = require('../src/create');
+const deleteStuff = require('../src/delete');
 
 const initSwitch = (response) => {
   switch (response) {
@@ -6,54 +9,53 @@ const initSwitch = (response) => {
         read.readDepartments();
         break;
 
-    case 'Create New Department':
-        console.log('create department switch statement has been triggered.')
-        src.createDepartment();
-        break;
-
-    case "Edit Department":
-        src.updateDepartment();
-        break;
-
-    case "Delete Department":
-        src.deleteDepartment();
-        break;
-
     case "View All Roles":
         read.readRoles();
         break;
 
-    case "Create New Role":
-        src.createRole();
-        break;
-
-    case "Edit Role":
-        src.updateRole();
-        break;
-
-    case "Delete Role":
-        src.deleteRole();
-        break;
-
     case "View All Employees":
-        src.readEmployees();
+        read.readEmployees();
         break;
 
-    case "Add Employee":
-        src.updateEmployee();
+    case "Edit Department":
+        update.updateDepartment();
         break;
 
     case "Edit Employee":
-        src.updateEmployee();
+        update.updateEmployee();
+        break;
+
+    case "Edit Role":
+        update.updateRole();
+        break;
+
+    case 'Create New Department':
+        create.createDepartment();
+        break;
+
+    case "Create New Role":
+        create.createRole();
+        break;
+
+    case "Add Employee":
+        create.updateEmployee();
+        break;
+
+    case "Delete Department":
+        deleteStuff.deleteDepartment();
+        break;
+
+    case "Delete Role":
+        deleteStuff.deleteRole();
         break;
 
     case "Delete Employee":
-        src.deleteEmployee();
+        deleteStuff.deleteEmployee();
         break;
 
     // ends the program
     case "Exit":
-        db.end();
+        exit();
         console.log("\nGoodbye!");
         break;
   };
