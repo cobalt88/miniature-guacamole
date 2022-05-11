@@ -1,10 +1,9 @@
-const src = require('../src')
+const read = require('../src/read')
 
 const initSwitch = (response) => {
   switch (response) {
     case 'View All Departments':
-        src.readDepartments();
-        console.log(response);
+        read.readDepartments();
         break;
 
     case 'Create New Department':
@@ -21,7 +20,7 @@ const initSwitch = (response) => {
         break;
 
     case "View All Roles":
-        src.readRoles();
+        read.readRoles();
         break;
 
     case "Create New Role":

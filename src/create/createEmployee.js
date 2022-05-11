@@ -1,5 +1,3 @@
-const lib = require('../../lib');
-const utils = require('../../utils');
 require('console.table');
 
 

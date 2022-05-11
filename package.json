@@ -15,7 +15,9 @@
     "src": "src",
     "utils": "utils"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "dpdm": "^3.9.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node init.js"
