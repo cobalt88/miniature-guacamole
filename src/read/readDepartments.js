@@ -1,13 +1,20 @@
 const lib = require('../../lib');
+const db = require('../../db');
+const utils = require('../../utils');
+const inquirer = require('inquirer');
 require('console.table');
 
 
 const readDepartments = async() => {
-  console.log('Viewing Departments\n');
   const query = `SELECT * FROM departments`;
-  const response = db.query(query, function (err, res) {
-    console.table(response);
+  const response = db.db.query(query, function (err, res) {
+    console.table(res);
   });
+
+  if(response !== undefined){
+    utils.cliNav();
 };
+  }
+  
 
 module.exports = readDepartments
