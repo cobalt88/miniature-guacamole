@@ -1,14 +1,8 @@
-const initSwitch = require('./initSwitch');
-const exit = require('./exit');
-const cliNav = require('./cliNav');
-const cliNavSwitch = require('./cliNavSwitch');
-const init = require('./init');
+const general = require('./general');
+const navigation = require('./navigation');
 
 module.exports = {
-  initSwitch: initSwitch,
-  exit: exit,
-  cliNav: cliNav,
-  cliNavSwitch: cliNavSwitch,
-  init
+  general: general,
+  navigation: navigation,
 };
 

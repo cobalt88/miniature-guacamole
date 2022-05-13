@@ -1,9 +1,8 @@
 const inquirer = require('inquirer');
-const inquirerPrompts = require('../lib/inquirerPrompts');
-const src = require('../src');
-const exit = require('./exit');
-const init = require('../app');
-
+const inquirerPrompts = require('../../lib/inquirerPrompts');
+const src = require('../../src');
+const exit = require('../exit');
+const init = require('../../init');
 
 const cliNavSwitch = async(response) => {
   switch(response){

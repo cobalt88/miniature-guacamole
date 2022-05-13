@@ -2,7 +2,6 @@ const read = require('../src/read');
 const update = require('../src/update');
 const create = require('../src/create');
 const deleteStuff = require('../src/delete');
-const utils = require('./index');
 
 const initSwitch = (response) => {
   switch (response) {
@@ -56,7 +55,11 @@ const initSwitch = (response) => {
 
     // ends the program
     case "Exit":
-        utils.exit();
+        const confirm = await inquirer.prompt(lib.inquirerPrompts.confirm);
+        if(confirm){
+          console.log("Thank you for using Employee Tracker, Come back again soon!")
+          process.exit(1);
+        };  
         break;
   };
 };
