@@ -1,12 +1,12 @@
-const create = require('./create');
-const deleteStuff = require('./delete');
-const read = require('./read');
-const update = require('./update')
+const createData = require('./createData');
+const deleteData = require('./deleteData');
+const readData = require('./readData');
+const updateData = require('./updateData')
 
 module.exports = {
-  create: create,
-  deleteStuff: deleteStuff,
-  read: read,
-  update: update
+  createData: createData,
+  deleteData: deleteData,
+  readData: readData,
+  updateData: updateData
 };
 

@@ -6,6 +6,7 @@
     "inquirer": "^8.2.4",
     "mysql2": "^2.3.3"
   },
+
   "name": "miniature-guacamole",
   "description": "Simplified employee tracker for module 12 challenge",
   "version": "1.0.0",
