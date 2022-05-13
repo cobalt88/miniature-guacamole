@@ -3,7 +3,7 @@ const update = require('../src/update');
 const create = require('../src/create');
 const deleteStuff = require('../src/delete');
 
-const initSwitch = (response) => {
+const initSwitch = async(response) => {
   switch (response) {
     case 'View All Departments':
         read.readDepartments();

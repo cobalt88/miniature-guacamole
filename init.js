@@ -6,7 +6,7 @@ const lib = require('./lib');
 const init = async() => {
   const response =  await inquirer.prompt(lib.inquirerPrompts.initialPromptOptions);
   console.log(response.initial);
-  
+  utils.initSwitch(response.initial);
 };
 
 init();

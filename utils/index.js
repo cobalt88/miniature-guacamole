@@ -1,8 +1,8 @@
-const general = require('./general');
 const navigation = require('./navigation');
+const initSwitch = require('./initSwitch');
 
 module.exports = {
-  general: general,
   navigation: navigation,
+  initSwitch: initSwitch
 };
 
