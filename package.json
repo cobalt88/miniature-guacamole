@@ -9,7 +9,7 @@
   "name": "miniature-guacamole",
   "description": "Simplified employee tracker for module 12 challenge",
   "version": "1.0.0",
-  "main": "init.js",
+  "main": "app.js",
   "directories": {
     "lib": "lib",
     "src": "src",

@@ -1,17 +1,22 @@
 const inquirer = require('inquirer');
-const inquirerPrompts = require('../lib/inquirerPrompts');
-const exit = require('./exit');
-const init = require('../init');
+const lib = require('../lib');
+const utils = require('../utils');
 
 const cliNav = async() => {
-  const response = await inquirer.prompt(inquirerPrompts.navigation); 
-  if(response.navigation === 'Main Menu'){
-    init()
-  } else {
-    const confirm = await inquirer.prompt(inquirerPrompts.confirm);
-    if(confirm){
-      exit();
-    }
+  const response = await inquirer.prompt(lib.inquirerPrompts.navigation); 
+  console.log(response)
+
+  switch(response.Navigation){
+    case 'Return to main menu':
+      utils.init();
+      break;
+
+    case 'Exit Application':
+      const confirm = await inquirer.prompt(lib.inquirerPrompts.confirm);
+      if(confirm){
+        utils.exit(); 
+      };     
+      break;
   }
 }
 
