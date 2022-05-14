@@ -2,7 +2,7 @@ const db = require('../db');
 const utils = require('../utils');
 const inquirer = require('inquirer');
 const lib = require('../lib');
-import { initSwitch } from '../utils/initSwitch';
+
 
 const nav = async() => {
   try{

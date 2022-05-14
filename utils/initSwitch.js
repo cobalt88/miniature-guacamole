@@ -1,7 +1,7 @@
 const src = require('../src');
 const utils = require('../utils');
 
-export const initSwitch = async(response) => {
+const initSwitch = async(response) => {
   switch (response) {
     case 'View All Departments':
         src.readData.readDepartments();
@@ -63,4 +63,5 @@ export const initSwitch = async(response) => {
   return 
 };
 
+module.exports = initSwitch
 module.exports = initSwitch
