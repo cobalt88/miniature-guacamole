@@ -5,8 +5,9 @@
 const inquirer = require("inquirer");
 const db = require("./db");
 const rolesArr = [];
-const departmentsArr = [];
-const employeesArr = [];
+let departmentsArr = [];
+let departmentOptions = [];
+let employeesArr = [];
 const managersArr = [];
 
 
@@ -139,10 +140,9 @@ const createRolePrompts =
     message: 'What is the base salary for this role?'
   },
   {
-    type: 'list',
+    type: 'input',
     name: 'department',
-    message: 'What department does this role belong to?',
-    options: departmentsArr
+    message: 'What department does this role belong to? Remember to input department by ID# not by name.'
   }
 ]
 
@@ -152,6 +152,95 @@ const createRolePrompts =
 EDIT PROMPTS
 ==================================================
 */
+const enterNewValue = 
+[
+  {
+    type: 'input',
+    name: 'newValue',
+    message: 'Enter new value'
+  }
+];
+
+const editEmployeePrompt = 
+[
+  {
+    type: 'input',
+    name: 'employee',
+    message: 'Enter the ID number of the employee you would like to edit'
+  },
+  {
+    type: 'list',
+    name: 'options',
+    message: 'Which value would you like to edit?',
+    choices: [
+      'First Name',
+      'Last Name',
+      'Role/Title',
+      'Direct Manager',
+      'Manager Status'
+    ]
+
+  }
+];
+
+const editRolePrompts = 
+[
+  {
+    type: 'input',
+    name: 'role',
+    message: 'Enter the ID number of the role you would like to edit'
+  }
+];
+
+const editDepartmentPrompts = 
+[
+  {
+    type: 'input',
+    name: 'department',
+    message: 'Enter the ID number of the department you would like to edit'
+  }
+];
+
+/*
+==================================================
+DELETE PROMPTS
+==================================================
+*/
+const deleteConfirm = 
+[
+  {
+    type: 'confirm',
+    name: 'deleteConfirm',
+    message: 'Would you like to delete another?'
+  }
+];
+
+const deleteEmployeesPrompt = 
+[
+  {
+    type: 'input',
+    name: 'employee',
+    message: 'Enter the ID number of the employee you would like to delete.'
+  }
+];
+
+const deleteRolePrompts = 
+[
+  {
+    type: 'input',
+    name: 'role',
+    message: 'Enter the ID number of the role you would like to remove'
+  }
+];
+
+const deleteDepartmentPrompts = 
+[
+  {
+    type: 'input',
+    name: 'department',
+    message: 'Enter the id number of the department you would like to delete'
+  }
+];
 
 /*
 ==================================================
@@ -202,11 +291,12 @@ const createRolesArray = async () => {
           salary: role.salary,
           value: role.id,
         };
+        rolesArr = roles
       });
-      rolesArr.push(...roles);
+      
     });
   } catch (err) {
-    console.error(`Error in CreateRolesArray: ${err}`);
+    console.error(`Unexpected error in CreateRolesArray: ${err}`);
   }
 };
 
@@ -216,14 +306,16 @@ const createDepartmentsArray = async () => {
     db.db.query(query, async (err, res) => {
       const departments = await res.map((department) => {
         return {
-          name: department.name,
+          name: department.dep_name,
           value: department.id,
         };
       });
-      departmentsArr.push(...departments);
+      departmentsArr = departments;
+      let options = departmentsArr.map(x => (x.name));
+      departmentOptions = options;
     });
   } catch (err) {
-    console.error(`Error in createDepartmentsArr ${err}`);
+    console.error(`Unexpected error in createDepartmentsArr ${err}`);
   }
 };
 
@@ -233,17 +325,19 @@ const createEmployeeArray = async () => {
     db.db.query(query, async (err, res) => {
       const employees = await res.map((employee) => {
         return {
+          id: employee.id,
           firstName: employee.first_name,
           lastName: employee.last_name,
           role: employee.role_id,
           managerId: employee.manager_id,
           isManager: employee.is_manager,
-        };
+        }
+        
       });
-      employeesArr.push(...employees);
+      employeesArr = employees
     });
   } catch (err) {
-    console.error(err);
+    console.error(`Unexpected error in create employeeArr: ${err}`);
   }
 };
 
@@ -264,6 +358,7 @@ const readDepartments = async () => {
     const response = await queryTable(query);
   } catch (err) {
     console.error(`Error in read Departments: ${err}`);
+    nav();
   }
 };
 
@@ -273,6 +368,7 @@ const readEmployees = async () => {
     queryTable(query);
   } catch (err) {
     console.error(`Error in read employees: ${err}`);
+    nav();
   }
 };
 
@@ -282,6 +378,7 @@ const readRoles = async () => {
     queryTable(query);
   } catch (err) {
     console.error(`Error in read roles: ${err}`);
+    nav();
   }
 };
 /*
@@ -293,12 +390,14 @@ const createEmployee = async () => {
   try {
     let response = await inquirer.prompt(createEmployeePrompts);
     let query = `INSERT INTO employees (first_name, last_name, role_id, is_manager) VALUES (?, ?, ?, ?)`;
-    db.db.query(query, [
-      response.first_name,
-      response.last_name,
-      response.roleId,
-      response.is_manager,
-    ]),
+    db.db.query(
+      query,
+      [
+        response.first_name,
+        response.last_name,
+        response.roleId,
+        response.is_manager,
+      ],
       async (err, res) => {
         if (!err) {
           console.table(res);
@@ -308,40 +407,165 @@ const createEmployee = async () => {
         } else {
           return err;
         }
-      };
-    let confirm = await inquirer.prompt(addEmployeeConfirm);
-    if (confirm) {
-      return createEmployee();
-    } else {
-      return nav();
-    }
+        let confirm = await inquirer.prompt(createEmployeeConfirm);
+        if (confirm.addAnother) {
+          console.log(confirm);
+          return createEmployee();
+        } else {
+          return nav();
+        }
+      }
+    );
   } catch (err) {
     console.error(`Error in create employee: ${err}`);
+    nav();
   }
 };
 
-const createDepartment = async() => {
-  try{
+const createDepartment = async () => {
+  try {
     let response = await inquirer.prompt(createDepartmentPrompts);
     let query = `INSERT INTO departments (dep_name) VALUES (?)`;
-    db.db.query(query, [response.departmentName]), async(err, res) => {
-      if(!err){
+    db.db.query(query, [response.departmentName], async (err, res) => {
+      if (!err) {
         console.table(res);
-        console.log(`${response.departmentName} has been successfully added to the Database.`)
-      }else{
-        console.error(`Error in create department: ${err}`)
-      };
-    };
-    let confirm = await inquirer.prompt(createDepartmentConfirm);
-      if(confirm){
+        console.log(
+        `${response.departmentName} has been successfully added to the Database.`
+        );
+      } else {
+        console.error(`Error in create department: ${err}`);
+      }
+      let confirm = await inquirer.prompt(createDepartmentConfirm);
+      if (confirm.addAnother) {
         return createDepartment();
       } else {
         return nav();
       }
-  }catch(err){
-    console.error(`Unexpected error in create department: ${err}`)
+    });
+  } catch (err) {
+    console.error(`Unexpected error in create department: ${err}`);
+    nav();
   }
 };
+
+const createRole = async() => {
+  try{
+    console.table(departmentsArr);
+    let query = `INSERT INTO roles (title, salary, department_id) VALUES (?, ?, ?)`;
+    let response = await inquirer.prompt(createRolePrompts);
+    console.log(response);
+    db.db.query(query, [
+      response.title,
+      response.salary,
+      parseInt(response.department)
+    ], 
+    async(err, res) => {
+      if (!err) {
+        console.table(res);
+        console.log(
+        `${response.title} has been successfully added to the Database.`
+        );
+      } else {
+        console.error(`Error in createRole Query Function: ${err}`);
+      }
+      let confirm = await inquirer.prompt(createRoleConfirm);
+      if (confirm.addAnother) {
+        return createRole();
+      } else {
+        return nav();
+      }
+    });
+  }catch(err){
+    console.log(`Unexpected Error in createRole: ${err}`);
+    nav();
+  }
+}
+
+/*
+====================================================
+DELETE EMPLOYEE-ROLE-DEPARTMENT
+====================================================
+*/
+
+const deleteRole = async () => {
+  try {
+    console.table(rolesArr);
+    let response = await inquirer.prompt(deleteRolePrompts);
+    let confirm = await inquirer.prompt(confirmPrompt);
+
+    if (confirm.confirmation) {
+      let roleId = parseInt(response.role);
+      let query = `DELETE FROM roles WHERE id = ?`;
+      db.db.query(query, roleId, async (err, res) => {
+        if (!err) {
+          console.table(res);
+          console.log(
+            `Role with id: ${roleId} has been deleted from the database. Reminder: Edit the roles of any employees who may have been assigned to this role.`
+          );
+          let another = await inquirer.prompt(deleteConfirm);
+          if (another.deleteConfirm) {
+            return deleteRole();
+          } else {
+            nav();
+          }
+        }else{
+          console.error(err);
+        }
+      });
+    } else {
+      nav();
+    }
+  } catch (err) {
+    console.error(`Unexpected error found in deleteRole: ${err}`);
+    nav();
+  }
+};
+
+const deleteEmployee = async() => {
+  try{
+    
+    console.table(employeesArr);
+    let response = await inquirer.prompt(deleteEmployeesPrompt);
+    let confirm = await inquirer.prompt(confirmPrompt);
+
+    if (confirm.confirmation){
+    let employeeId = parseInt(response.employee);
+    let query = `DELETE FROM employees WHERE id = ?`;
+    db.db.query(query, employeeId, async (err, res) => {
+      if (!err) {
+        console.table(res);
+        console.log(
+          `Employee with id: ${employeeId} has been deleted from the database. Reminder: Edit the roles of any employees who may have been assigned to this role.`
+        );
+        createEmployeeArray();
+        let another = await inquirer.prompt(deleteConfirm);
+        if (another.deleteConfirm) {
+          
+          return deleteEmployee();
+        } else {
+          nav();
+        }
+      }else{
+        console.error(err);
+      }
+    });
+  } else {
+    nav();
+  }
+  }catch(err) {
+    console.error(`Unexpected error found in deleteEmployee:${err}`);
+    nav();
+  }
+};
+
+const deleteDepartment = async() => {
+  try{
+
+  }catch(err){
+    console.error(`Unexpected Error found in deleteRole: ${err}`);
+    nav();
+  }
+}
 
 /*
 ==================================================
