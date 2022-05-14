@@ -341,10 +341,12 @@ const createEmployeeArray = async () => {
     console.error(`Unexpected error in create employeeArr: ${err}`);
   }
 };
+/*
+===============================================================
+VIEW FUNCTIONS TO QUERY THE DB AND OUTPUT TABLES TO THE CONSOLE
+===============================================================
+*/
 
-//===========================================================
-//FUNCTIONS TO QUERY THE DB AND OUTPUT TABLES TO THE CONSOLE
-//===========================================================
 const queryTable = async (query) => {
   db.db.query(query, (err, res) => {
     console.table(res);
@@ -595,7 +597,51 @@ const deleteDepartment = async() => {
     console.error(`Unexpected Error found in deleteRole: ${err}`);
     nav();
   }
-}
+};
+
+/*
+====================================================
+EDIT EMPLOYEE-ROLE-DEPARTMENT
+====================================================
+*/
+
+const updateEmployee = async() => {
+  try{
+    console.log('Hey there, this feature is not quite done yet but is under development. Check back later, Thank you for using Employee Tracker!');
+   nav();
+  }catch(err){
+    console.error(`Unexpected Error found in updateEmployee: ${err}`);
+    nav();
+  }
+};
+
+const updateRole = async() => {
+  try{
+    console.log('Hey there, this feature is not quite done yet but is under development. Check back later, Thank you for using Employee Tracker!');
+    nav();
+  }catch(err){
+    console.error(`Unexpected Error found in editRole: ${err}`);
+    nav();
+  }
+};
+
+const updateDepartment = async() => {
+  try{
+    console.log('Hey there, this feature is not quite done yet but is under development. Check back later, Thank you for using Employee Tracker!');
+    nav();
+  }catch(err){
+    console.error(`Unexpected Error found in updateDepartment: ${err}`);
+    nav();
+  }
+};
+
+/*
+====================================================
+SORT EMPLOYEE-ROLE-DEPARTMENT
+====================================================
+*/
+
+
 
 /*
 ==================================================
