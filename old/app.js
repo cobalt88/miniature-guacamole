@@ -17,41 +17,9 @@ init();
 
 
 
-// function for viewing roles
-function viewRoles() {
-    // message to user \n provides a line break
-    console.log('Viewing Roles\n');
-    // SQL query to select all roles
-    const query = `SELECT * FROM roles`;
-    // grabs the response from the query and runs it through the console.table function
-    db.query(query, function (err, res) {
-        // if there is an error, throw it
-        if (err) throw err;
-        // console.table is a function that displays the data in a table
-        console.table(res);
-        // runs the initPrompt function
-        initPrompt();
-    });
-};
 
-// function for viewing employees
-function viewEmployee() {
-    // message to user \n provides a line break
-    console.log('Viewing Employees\n');
-    // SQL query to select all employees
-    const query = `SELECT * FROM employees`;
-    // grabs the response from the query and runs it through the console.table function
-    db.query(query, function (err, res) {
-        // if there is an error, throw it
-        if (err) {
-            throw err;
-        }
-        // returns the response to the console.table function
-        console.table(res);
-        // runs the initPrompt function
-        initPrompt();
-    });
-};
+
+
 
 // function for viewing employees by department
 function viewEmployeeByDepartment() {

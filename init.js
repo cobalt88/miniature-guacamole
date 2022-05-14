@@ -190,7 +190,7 @@ const initSwitch = async(response) => {
         break;
 
     case "Add Employee":
-        updateEmployee();
+        createEmployee();
         break;
 
     case "Delete Department":
