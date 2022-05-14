@@ -641,6 +641,35 @@ SORT EMPLOYEE-ROLE-DEPARTMENT
 ====================================================
 */
 
+const sortEmployeeTable = async() => {
+  try{
+    console.log('Hey there, this feature is not quite done yet but is under development. Check back later, Thank you for using Employee Tracker!');
+    nav();
+  }catch(err) {
+    console.error(`Unexpected error found in sortEmployeeTable:${err}`);
+    nav();
+  }
+};
+
+const sortDepartmentsTable = async() => {
+  try{
+    console.log('Hey there, this feature is not quite done yet but is under development. Check back later, Thank you for using Employee Tracker!');
+    nav();
+  }catch(err) {
+    console.error(`Unexpected error found in sortDepartmentsTable:${err}`);
+    nav();
+  }
+};
+
+const sortRolesTable = async() => {
+  try{
+    console.log('Hey there, this feature is not quite done yet but is under development. Check back later, Thank you for using Employee Tracker!');
+    nav();
+  }catch(err) {
+    console.error(`Unexpected error found in sortRolesTable:${err}`);
+    nav();
+  }
+};
 
 
 /*
