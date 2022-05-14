@@ -4,11 +4,11 @@
 
 const inquirer = require("inquirer");
 const db = require("./db");
-const rolesArr = [];
+let rolesArr = [];
 let departmentsArr = [];
 let departmentOptions = [];
 let employeesArr = [];
-const managersArr = [];
+let managersArr = [];
 
 
 //==================================================
@@ -306,6 +306,7 @@ const createDepartmentsArray = async () => {
     db.db.query(query, async (err, res) => {
       const departments = await res.map((department) => {
         return {
+          id: department.id,
           name: department.dep_name,
           value: department.id,
         };
@@ -502,6 +503,7 @@ const deleteRole = async () => {
           console.log(
             `Role with id: ${roleId} has been deleted from the database. Reminder: Edit the roles of any employees who may have been assigned to this role.`
           );
+          createRolesArray();
           let another = await inquirer.prompt(deleteConfirm);
           if (another.deleteConfirm) {
             return deleteRole();
@@ -560,6 +562,34 @@ const deleteEmployee = async() => {
 
 const deleteDepartment = async() => {
   try{
+    console.table(departmentsArr);
+    let response = await inquirer.prompt(deleteDepartmentPrompts);
+    let confirm = await inquirer.prompt(confirmPrompt);
+
+    if (confirm.confirmation){
+    let departmentId = parseInt(response.department);
+    let query = `DELETE FROM departments WHERE id = ?`;
+    db.db.query(query, departmentId, async (err, res) => {
+      if (!err) {
+        console.table(res);
+        console.log(
+          `Department with id: ${departmentId} has been deleted from the database. Reminder: Edit the roles of any employees who may have been assigned to this role.`
+        );
+        createDepartmentsArray();
+        let another = await inquirer.prompt(deleteConfirm);
+        if (another.deleteConfirm) {
+          
+          return deleteDepartment();
+        } else {
+          nav();
+        }
+      }else{
+        console.error(err);
+      }
+    });
+  } else {
+    nav();
+  }
 
   }catch(err){
     console.error(`Unexpected Error found in deleteRole: ${err}`);
