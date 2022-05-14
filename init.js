@@ -1,6 +1,8 @@
 const inquirer = require('inquirer');
 const db = require('./db')
-const rolesArr = [];
+let rolesArr = [];
+let departmentsArr = [];
+let employeesArr = [];
 
 const initialPromptOptions =
 [
@@ -132,6 +134,62 @@ const readRoles = async() => {
   }
 };
 
+const createRolesArray = async() => {
+  try{
+    const query = `SELECT * FROM roles`;
+    db.query(query, async(err, res) => {
+      const roles = await res.map(role => {
+        return {
+          name: role.title,
+          salary: role.salary,
+          value: role.id
+        }
+      });
+      rolesArr.push(...roles);
+    });
+    
+  }catch(err){
+    console.error(err);
+  }
+}
+
+const createDepartmentsArray = async() => {
+  try{
+    const query = `SELECT * FROM departments`;
+    db.query(query, async(err, res) => {
+      const departments = await res.map(department => {
+        return{
+          name: department.name,
+          value: department.id
+        };
+      });
+      departmentsArr.push(...departments);
+    });
+  }catch(err){
+    console.error(err);
+  };
+};
+
+const createEmployeeArray = async() => {
+  try{
+    const query = `SELECT * FROM employees`;
+    db.query(query, async(err, res) => {
+      const employees = await res.map(employee => {
+        return{
+          firstName: employee.first_name,
+          lastName: employee.last_name,
+          role: employee.role_id, 
+          managerId: employee.manager_id,
+          isManager: employee.is_manager
+        };
+      });
+      employeesArr.push(...employees)
+    });
+  }catch(err){
+    console.error(err);
+  };
+};
+
 const createEmployee = async() => {
   try{
     let response = await inquirer.prompt(createEmployeePrompts);
@@ -142,14 +200,14 @@ const createEmployee = async() => {
         console.log(`${response.first_name} ${response.last_name} has successfully been added to the database.`);
       }else{
         return err;
-      }
-    }
+      };
+    };
     let confirm = await inquirer.prompt(addEmployeeConfirm);
     if(confirm){
       return createEmployee();
     }else{
       return nav();
-    }
+    };
   }catch(err){
     console.error(err)
   };
@@ -234,11 +292,26 @@ const nav = async() => {
   }
 }
 
+const createOptionsArrays = async() => {
+  try{
+    rolesArr = await createRolesArray();
+    departmentsArr = await createDepartmentsArray();
+    employeesArr = await createEmployeeArray();
+
+  }catch(err){
+    console.error(err);
+  }
+}
+
 
 const init = async() => {
-  const response =  await inquirer.prompt(initialPromptOptions);
-  console.log(response.initial);
-  initSwitch(response.initial);
+  try{
+    createOptionsArrays();
+    const response =  await inquirer.prompt(initialPromptOptions);
+    initSwitch(response.initial);
+  }catch(err){
+    console.error(err);
+  }
 };
 
 
