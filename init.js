@@ -384,7 +384,16 @@ const createEmployeeArray = async () => {
 
 const createManagersArr = async() => {
   try{
-    //create query to pull all employees who are managers from the employees db;
+    let query = `SELECT * FROM employees WHERE is_manager = TRUE`;
+    db.db.query(query, async(err, res) => {
+      const managers = await res.map((manager) => {
+        return{
+          id: manager.id,
+          firstName: manager.first_name,
+          lastName: manager.last_name,
+        }
+      })
+    })
     //query the db, 
     // map the return from the db and make managersArr = results of mapping
 
