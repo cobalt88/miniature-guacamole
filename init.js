@@ -1,5 +1,5 @@
 //==================================================
-//Global variables and dependencies
+//GLOBAL VARIABLES AND MODULE DEPENDENCIES
 //==================================================
 
 const inquirer = require("inquirer");
@@ -12,7 +12,7 @@ let managersArr = [];
 
 
 //==================================================
-//inquirer prompts
+//INITIAL PROMPTS
 //==================================================
 
 const initialPromptOptions = [
@@ -37,6 +37,7 @@ const initialPromptOptions = [
     ],
   },
 ];
+
 const navigationPrompts = [
   {
     name: "Navigation",
@@ -264,14 +265,24 @@ const deleteDepartmentPrompts =
 SORT PROMPTS
 ==================================================
 */
-
+const sortAgain =
+[
+  {
+    type: 'confirm',
+    name: 'sortAgain',
+    message: 'Would you like to sort by another variable?'
+  }
+]
 
 const sortDepartmentsPrompts = [
   {
     type: "list",
     name: "sortDepartments",
     message: "Sort Departments table by:",
-    options: ["Index", "ID", "First Name", "Last Name", "Role", "Manager"],
+    options: [
+      "ID", 
+      "Department Name"
+    ],
   },
 ];
 
@@ -280,7 +291,13 @@ const sortEmployeePrompts = [
     type: "list",
     name: "sortEmployees",
     message: "Sort Employees by:",
-    options: ["Index", "ID", "First Name", "Last Name", "Manager", "Role"],
+    options: [
+      "ID", 
+      "First Name", 
+      "Last Name", 
+      "Manager", 
+      "Role"
+    ],
   },
 ];
 
@@ -289,13 +306,19 @@ const sortRolePrompts = [
     type: "list",
     name: "sortRoles",
     message: "Sort Roles By:",
-    options: ["Title A-Z", "Title Z-A", "Salary", "ID", "Department"],
+    options: [
+      "Title A-Z", 
+      "Title Z-A", 
+      "Salary", 
+      "ID", 
+      "Department"
+    ],
   },
 ];
 
 
 //==============================================================
-// functions to create arrays for dynamic prompt options
+// FUNCTIONS TO CREATE ARRAYS FROM DATABASE 
 //==============================================================
 
 const createRolesArray = async () => {
@@ -308,9 +331,9 @@ const createRolesArray = async () => {
           salary: role.salary,
           value: role.id,
         };
-        rolesArr = roles
+        s
       });
-      
+      rolesArr = roles
     });
   } catch (err) {
     console.error(`Unexpected error in CreateRolesArray: ${err}`);
@@ -358,28 +381,163 @@ const createEmployeeArray = async () => {
     console.error(`Unexpected error in create employeeArr: ${err}`);
   }
 };
+
+const createManagersArr = async() => {
+  try{
+    //create query to pull all employees who are managers from the employees db;
+    //query the db, 
+    // map the return from the db and make managersArr = results of mapping
+
+  }catch(err){
+    console.error(`Unexpected Error encountered in createManagerArr: ${err}`);
+  }
+}
+
+/*
+===============================================
+SORT TABLE FUNCTIONS
+===============================================
+*/
+
+const sort = async(table) => {
+  try{
+    let response = await inquirer.prompt(sortAgain);
+    if(response.sortAgain){
+      switch(table){
+        case 'departments':
+          sortDepartments();
+          break;
+
+        case 'employees':
+          sortEmployees();
+          break;
+
+        case 'roles':
+          sortRoles();
+          break;
+      }
+    }else{
+      nav();
+    };
+  }catch(err){
+    console.error(`Unknown Error found in sort: ${err}`);
+    nav();
+  }
+}
+
+const sortDepartments = async() => {
+  try{
+    let response = await inquirer.prompt(sortDepartmentsPrompts);
+    if(response.sortDepartments === 'ID'){
+      console.log('build query to pull sql table sorted by id');
+      //queryTable(newQuery)
+    } else {
+      nav();
+    }
+  }catch(err){
+    console.error(`Unexpected Error found in sortDepartments: ${err}`)
+  }
+};
+
+const sortEmployees = async() => {
+  try{
+    let response = await inquirer.prompt(sortEmployeePrompts);
+    let value = response.sortDepartments;
+
+    switch(value){
+      case 'ID':
+        console.log('query to sort employees by id');
+        //queryTable(newQuery)
+        break;
+
+      case 'First Name':
+        console.log('query to sort employees by first name');
+        //queryTable(newQuery)
+        break;
+
+      case 'Last Name':
+        console.log('query to sort employees by last name');
+        //queryTable(newQuery)
+        break;
+
+      case 'Manager':
+        console.log('query to sort employees my manager name');
+        //queryTable(newQuery)
+        break;
+
+      case 'Role': 
+        console.log('command to sort employees by role');
+        //queryTable(newQuery);
+        break;
+    }
+  }catch(err){
+    console.error(`Unexpected Error found in sortEmployees: ${err}`)
+  }
+};
+
+const sortRoles = async() => {
+  try{
+    let response = await inquirer.prompt(sortRolePrompts);
+    let value = response.sortRoles;
+
+    switch(value){
+      case 'Title A-Z':
+        //let query = query to sort alphabetically;
+        //queryTable(newQuery);
+        break;
+
+      case 'Title Z-A':
+        //let query = query to sort reverse alphabetically;
+        //queryTable(newQuery);
+        break;
+
+      case 'Salary':
+        //let query = query to sort by salary in descending order;
+        //queryTable(newQuery);
+        break;
+      
+      case 'ID':
+        //let query = query to sort by ID;
+        //queryTable(newQuery);
+        break;
+
+      case 'Department':
+        //let query = query to sort alphabetically;
+        //queryTable(newQuery);
+        break;
+
+    }
+  }catch(err){
+    console.error(`Unexpected Error found in sortRoles: ${err}`);
+    nav();
+  }
+};
+
+
+
 /*
 ===============================================================
 VIEW FUNCTIONS TO QUERY THE DB AND OUTPUT TABLES TO THE CONSOLE
 ===============================================================
 */
 
-const queryTable = async (query) => {
+const queryTable = async (query, table) => {
   db.db.query(query, (err, res) => {
     console.table(res);
-    nav();
+    sort(table);
   });
 };
 
 // read/view table functions
 const readDepartments = async () => {
   let query = `SELECT * FROM departments`;
+  let table = `departments`;
   try {
-    const response = await queryTable(query);
+    let response = await queryTable(query, table);
   } catch (err) {
     console.error(`Error in read Departments: ${err}`);
     nav();
-  }
+  };
 };
 
 const readEmployees = async () => {
@@ -661,6 +819,7 @@ SORT EMPLOYEE-ROLE-DEPARTMENT
 
 const sortEmployeeTable = async() => {
   try{
+    console.table(employeesArr);
     console.log('Hey there, this feature is not quite done yet but is under development. Check back later, Thank you for using Employee Tracker!');
     nav();
   }catch(err) {
@@ -688,6 +847,31 @@ const sortRolesTable = async() => {
     nav();
   }
 };
+
+/*
+==================================================
+MISCELLANEOUS FUNCTIONS
+==================================================
+*/
+
+const dbQuery = async (query) => {
+  db.db.query(query, (err, res) => {
+    console.table(res);
+    nav();
+  });
+};
+
+const viewBudget = async() => {
+  try{
+    //let query = query to add together the total annual cost off employees salaries added together
+    dbQuery(query);
+
+  }catch(err){
+    console.error(`Unexpected Error found in viewBudget: ${err}`);
+    nav();
+  }
+};
+
 
 
 /*
