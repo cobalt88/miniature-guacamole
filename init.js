@@ -33,6 +33,7 @@ const initialPromptOptions = [
       "Add Employee",
       "Delete Employee",
       "Edit Employee",
+      "View Budget",
       "Exit",
     ],
   },
@@ -530,6 +531,7 @@ VIEW FUNCTIONS TO QUERY THE DB AND OUTPUT TABLES TO THE CONSOLE
 ===============================================================
 */
 
+// query the database
 const queryTable = async (query, table) => {
   db.db.query(query, (err, res) => {
     console.table(res);
@@ -872,7 +874,7 @@ const dbQuery = async (query) => {
 
 const viewBudget = async() => {
   try{
-    //let query = query to add together the total annual cost off employees salaries added together
+    let query = `SELECT SUM(salary) as sum_salary FROM employees`;
     dbQuery(query);
 
   }catch(err){
@@ -939,6 +941,10 @@ const initSwitch = async (response) => {
       deleteEmployee();
       break;
 
+    case "View Budget":
+      viewBudget();
+      break;
+
     case "Exit":
       const confirm = await inquirer.prompt(confirmPrompt);
       if (confirm) {
@@ -957,6 +963,7 @@ const initSwitch = async (response) => {
 //==================================================
 
 const nav = async () => {
+  
   try {
     const response = await inquirer.prompt(navigationPrompts);
     console.log(response);
