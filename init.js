@@ -152,12 +152,12 @@ const createRolePrompts =
 EDIT PROMPTS
 ==================================================
 */
-const enterNewValue = 
+const editAnotherValue = 
 [
   {
-    type: 'input',
-    name: 'newValue',
-    message: 'Enter new value'
+    type: 'confirm',
+    name: 'editAnother',
+    message: 'Would you like to update another value?'
   }
 ];
 
@@ -175,11 +175,14 @@ const editEmployeePrompt =
     choices: [
       'First Name',
       'Last Name',
-      'Role/Title',
-      'Direct Manager',
+      'Role ID',
       'Manager Status'
     ]
-
+  },
+  {
+    type: 'input',
+    name: 'newValue',
+    message: 'Enter new value'
   }
 ];
 
@@ -189,6 +192,20 @@ const editRolePrompts =
     type: 'input',
     name: 'role',
     message: 'Enter the ID number of the role you would like to edit'
+  },
+  {
+    type: 'list',
+    name: 'editOptions',
+    message: 'What value would you like to change?',
+    choices: [
+      'Title',
+      'Base Salary'
+    ]
+  },
+  {
+    type: 'input',
+    name: 'newValue',
+    message: 'Enter new value'
   }
 ];
 
@@ -607,6 +624,7 @@ EDIT EMPLOYEE-ROLE-DEPARTMENT
 
 const updateEmployee = async() => {
   try{
+    let response = inquirer.prompt(editEmployeePrompt)
     console.log('Hey there, this feature is not quite done yet but is under development. Check back later, Thank you for using Employee Tracker!');
    nav();
   }catch(err){

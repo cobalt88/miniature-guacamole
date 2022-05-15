@@ -1,5 +1,5 @@
--- drops database and creates it
+-- Deletes existing database
 DROP DATABASE IF EXISTS employee_data;
 CREATE DATABASE employee_data;
--- connects to database
+-- Selects the newly reated database
 USE employee_data;
