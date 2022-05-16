@@ -11,6 +11,8 @@ let employeesArr = [];
 let managersArr = [];
 
 
+
+
 //==================================================
 //INITIAL PROMPTS
 //==================================================
@@ -34,6 +36,7 @@ const initialPromptOptions = [
       "Delete Employee",
       "Edit Employee",
       "View Budget",
+      "View Managers",
       "Exit",
     ],
   },
@@ -471,8 +474,8 @@ const sortEmployees = async() => {
         break;
 
       case 'Manager':
-        console.log('query to sort employees my manager name');
-        //queryTable(newQuery)
+        // let query = `CREATE TABLE managers AS SELECT * FROM employees WHERE is_manager = 'true';`
+        // queryTable(query)
         break;
 
       case 'Role': 
@@ -535,13 +538,15 @@ VIEW FUNCTIONS TO QUERY THE DB AND OUTPUT TABLES TO THE CONSOLE
 const queryTable = async (query, table) => {
   db.db.query(query, (err, res) => {
     console.table(res);
-    sort(table);
+    nav();
   });
 };
 
 // read/view table functions
 const readDepartments = async () => {
+
   let query = `SELECT * FROM departments`;
+
   let table = `departments`;
   try {
     let response = await queryTable(query, table);
@@ -551,8 +556,40 @@ const readDepartments = async () => {
   };
 };
 
+const readManagers = async () => {
+
+  let query = 
+  `
+  SELECT 
+  managers.id AS id,
+  managers.full_name AS name,
+  managers.manager_id AS manager_id
+  FROM managers
+  `;
+  let table = `managers`;
+  try {
+    let response = await queryTable(query, table);
+  } catch (err) {
+    console.error(`Error in read Departments: ${err}`);
+    nav();
+  };
+};
+
 const readEmployees = async () => {
-  let query = `SELECT * FROM employees`;
+
+  let query = `
+  SELECT  employees.id AS id, 
+  employees.first_name AS first_name, 
+  employees.last_name AS last_name, 
+  managers.full_name AS manager_name,
+  roles.title AS title, 
+  roles.salary AS salary
+  FROM employees 
+  LEFT JOIN roles ON employees.role_id = roles.id
+  LEFT JOIN departments ON roles.department_id = departments.id
+  LEFT JOIN managers ON employees.manager_id = managers.id
+  `;
+ 
   try {
     queryTable(query);
   } catch (err) {
@@ -865,23 +902,39 @@ MISCELLANEOUS FUNCTIONS
 ==================================================
 */
 
-const dbQuery = async (query) => {
+const dbQuery = async(query) => {
   db.db.query(query, (err, res) => {
-    console.table(res);
-    nav();
   });
 };
 
 const viewBudget = async() => {
   try{
     let query = `SELECT SUM(salary) as sum_salary FROM employees`;
-    dbQuery(query);
+    let response = await dbQuery(query);
+    console.table(response);
+    nav();
 
   }catch(err){
     console.error(`Unexpected Error found in viewBudget: ${err}`);
     nav();
   }
 };
+
+const createManagersTable = async() => {
+  try{
+    let query = 
+    `
+    CREATE TABLE managers AS SELECT * FROM employees WHERE is_manager = 1
+    ALTER TABLE managers ADD COLUMN full_name VARCHAR(100)
+    UPDATE managers SET full_name = CONCAT(first_name, ' ', last_name)
+    `;
+    dbQuery(query);
+
+  }catch(err){
+    console.error(`Unexpected Error found in createManagersTable: ${err}`);
+    nav();
+  }
+}
 
 
 
@@ -945,6 +998,10 @@ const initSwitch = async (response) => {
       viewBudget();
       break;
 
+    case "View Managers":
+      readManagers();
+      break;
+
     case "Exit":
       const confirm = await inquirer.prompt(confirmPrompt);
       if (confirm) {
@@ -992,6 +1049,7 @@ const init = async () => {
     createRolesArray();
     createDepartmentsArray();
     createEmployeeArray();
+    createManagersTable();
     const response = await inquirer.prompt(initialPromptOptions);
     initSwitch(response.initial);
   } catch (err) {
