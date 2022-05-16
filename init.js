@@ -5,6 +5,7 @@
 const inquirer = require("inquirer");
 const db = require("./db");
 let rolesArr = [];
+let rolesOptionsArr = [];
 let departmentsArr = [];
 let departmentOptions = [];
 let employeesArr = [];
@@ -85,10 +86,10 @@ const createEmployeePrompts = [
     message: "What is the employee's last name?",
   },
   {
-    type: "list",
+    type: "Prompt",
     name: "roleId",
-    message: "What is the employee's role?",
-    choices: rolesArr,
+    message: "What is the employee's role? Enter role by id#",
+
   },
   {
     type: "confirm",
@@ -335,9 +336,9 @@ const createRolesArray = async () => {
           salary: role.salary,
           value: role.id,
         };
-        s
       });
-      rolesArr = roles
+      rolesArr = roles;
+      rolesOptions();
     });
   } catch (err) {
     console.error(`Unexpected error in CreateRolesArray: ${err}`);
@@ -614,6 +615,7 @@ CREATE/ADD NEW EMPLOYEE-ROLE-DEPARTMENT TO DB TABLES
 */
 const createEmployee = async () => {
   try {
+    
     let response = await inquirer.prompt(createEmployeePrompts);
     let query = `INSERT INTO employees (first_name, last_name, role_id, is_manager) VALUES (?, ?, ?, ?)`;
     db.db.query(
@@ -934,6 +936,12 @@ const createManagersTable = async() => {
     console.error(`Unexpected Error found in createManagersTable: ${err}`);
     nav();
   }
+};
+
+const rolesOptions = async() => {
+  let output = await rolesArr.map(a => a.name);
+  rolesOptionsArr = output;
+
 }
 
 
