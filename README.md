@@ -30,7 +30,7 @@ A CLI application for manipulating a SQL Employee Database.
 
  Some of the options include viewing all data in the employees, departments, and roles tables. Currently you are able to view add and delete, other functions such as edit and sort are in the works. Once everything is done fully functional the next step of this project will be a responsive front end to facilitate ease of use. 
 
- Link to latest walk-through video:   *<a href="https://drive.google.com/file/d/1WRff0gYTG9m92VfylvsXwv4iN27CjMZS/view"> Click Here To View</a>*
+ Link to latest walk-through video:   *<a href="https://drive.google.com/file/d/1ZPfIeTRHZ9OB3L4f1AusxQfRYcrKMQ8n/view?usp=sharing"> Click Here To View</a>*
 
 
 
