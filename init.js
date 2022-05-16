@@ -33,6 +33,7 @@ const initialPromptOptions = [
       "Delete Role",
       "Edit Role",
       "View All Employees",
+      "View Employees By Department",
       "Add Employee",
       "Delete Employee",
       "Edit Employee",
@@ -869,9 +870,23 @@ SORT EMPLOYEE-ROLE-DEPARTMENT
 
 const sortEmployeeTable = async() => {
   try{
+
     console.table(employeesArr);
     console.log('Hey there, this feature is not quite done yet but is under development. Check back later, Thank you for using Employee Tracker!');
     nav();
+  }catch(err) {
+    console.error(`Unexpected error found in sortEmployeeTable:${err}`);
+    nav();
+  }
+};
+
+const sortEmployeesByDepartment = async() => {
+  try{
+    buildEmployee2();
+    let query = 
+    `
+    SELECT * FROM employees2 ORDER BY NAME
+    `
   }catch(err) {
     console.error(`Unexpected error found in sortEmployeeTable:${err}`);
     nav();
@@ -906,16 +921,19 @@ MISCELLANEOUS FUNCTIONS
 
 const dbQuery = async(query) => {
   db.db.query(query, (err, res) => {
+    return res;
   });
 };
 
 const viewBudget = async() => {
   try{
-    let query = `SELECT SUM(salary) as sum_salary FROM employees`;
-    let response = await dbQuery(query);
-    console.table(response);
-    nav();
-
+    buildEmployee2();
+    let query = `SELECT SUM(salary) AS sum_salary FROM employees2`;
+   
+      db.db.query(query, (err, res) => {
+        console.table(res);
+        nav();
+      });
   }catch(err){
     console.error(`Unexpected Error found in viewBudget: ${err}`);
     nav();
@@ -943,6 +961,31 @@ const rolesOptions = async() => {
   rolesOptionsArr = output;
 
 }
+
+const buildEmployee2 = async() => {
+  try{
+    let query = `
+    DROP TABLE IF EXISTS employees2;
+    CREATE TABLE employees2 AS
+    SELECT  employees.id AS id, 
+    employees.first_name AS first_name, 
+    employees.last_name AS last_name, 
+    managers.full_name AS manager_name,
+    roles.title AS title, 
+    roles.salary AS salary,
+    roles.department_id AS department
+    FROM employees 
+    LEFT JOIN roles ON employees.role_id = roles.id
+    LEFT JOIN departments ON roles.department_id = departments.id
+    LEFT JOIN managers ON employees.manager_id = managers.id
+  
+    `
+    dbQuery(query);
+  }catch(err) {
+    console.error(`Unexpected error found in buildEmployee2: ${err}`);
+    
+  }
+};
 
 
 
@@ -1010,6 +1053,10 @@ const initSwitch = async (response) => {
       readManagers();
       break;
 
+    case "View Employees By Department":
+      sortEmployeesByDepartment();
+      break;
+
     case "Exit":
       const confirm = await inquirer.prompt(confirmPrompt);
       if (confirm) {
@@ -1031,7 +1078,6 @@ const nav = async () => {
   
   try {
     const response = await inquirer.prompt(navigationPrompts);
-    console.log(response);
     if (response.Navigation === "Return to main menu") {
       init();
     } else {
